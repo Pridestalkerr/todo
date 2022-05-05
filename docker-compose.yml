@@ -12,9 +12,9 @@ services:
       - ~/postgres/database:/data/postgres
     ports:
       - 5432:5432
-    
+
   backend:
-    build: ./backend/
+    build: ./todo-backend/
     ports:
       - 4000:4000
     environment:
@@ -27,7 +27,7 @@ services:
       - postgres
 
   frontend:
-    build: ./frontend/
+    build: ./todo-frontend/
     ports:
       - 5000:5000
     environment:
@@ -54,8 +54,7 @@ services:
       - FRONTEND_KEY=${FRONTEND_KEY}
       - BACKEND_CERT=${BACKEND_CERT}
       - BACKEND_KEY=${BACKEND_KEY}
-    command:
-      sh -c "mkdir -p /etc/nginx/ssl/${BACKEND_HOST}
+    command: sh -c "mkdir -p /etc/nginx/ssl/${BACKEND_HOST}
       && echo '$BACKEND_CERT' > /etc/nginx/ssl/${BACKEND_HOST}/cert.pem
       && echo '$BACKEND_KEY' > /etc/nginx/ssl/${BACKEND_HOST}/private.pem
       && mkdir -p /etc/nginx/ssl/${FRONTEND_HOST}
