@@ -14,6 +14,10 @@ const Secrets = {
   JWT_SECRET_REFRESH:
     process.env.JWT_SECRET_REFRESH ||
     "23o4r89ty24rf897th23dr97823drt867g24rd7968t2d4r6789tg2fr3d4",
+  OKTA_ORG_URL: process.env.OKTA_ORG_URL,
+  OKTA_CLIENT_ID: process.env.OKTA_CLIENT_ID,
+  OKTA_CLIENT_SECRET: process.env.OKTA_CLIENT_SECRET,
+  OKTA_TOKEN: process.env.OKTA_TOKEN,
 };
 
 export default Secrets;
