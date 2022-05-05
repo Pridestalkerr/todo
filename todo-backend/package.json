@@ -22,6 +22,7 @@
     "@okta/oidc-middleware": "^4.3.0",
     "@okta/okta-sdk-nodejs": "^5.0.0",
     "@prisma/client": "^3.13.0",
+    "@types/argon2": "^0.15.0",
     "@types/http-errors": "^1.8.2",
     "@types/jsonwebtoken": "^8.5.8",
     "argon2": "^0.28.5",
