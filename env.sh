@@ -25,3 +25,6 @@ export BACKEND_CERT=""
 export BACKEND_KEY=""
 
 export OKTA_ORG_URL=""
+export OKTA_CLIENT_ID=""
+export OKTA_CLIENT_SECRET=""
+export OKTA_TOKEN=""
