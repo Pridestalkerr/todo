@@ -3,7 +3,7 @@ const Secrets = {
   DB_URI:
     process.env.DB_URI ||
     "postgresql://todo:2d8i37hriewugrtyfgqfyuiwe@localhost:5432/mydb?schema=public",
-  DB_HOST: process.env.DB_HOST || "localhost:27017",
+  DB_HOST: process.env.DB_HOST || "localhost:5432",
   DB_NAME: process.env.DB_NAME || "todo",
   DB_USER: process.env.DB_USER || "root",
   DB_PASS: process.env.DB_PASS || "password",
