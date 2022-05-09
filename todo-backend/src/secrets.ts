@@ -1,23 +1,44 @@
-const Secrets = {
-  PORT: process.env.DB_URI || 9000,
-  DB_URI:
-    process.env.DB_URI ||
-    "postgresql://todo:2d8i37hriewugrtyfgqfyuiwe@localhost:5432/mydb?schema=public",
-  DB_HOST: process.env.DB_HOST || "localhost:5432",
-  DB_NAME: process.env.DB_NAME || "todo",
-  DB_USER: process.env.DB_USER || "root",
-  DB_PASS: process.env.DB_PASS || "password",
-  FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
-  JWT_SECRET_ACCESS:
-    process.env.JWT_SECRET_ACCESS ||
-    "3987h4fhu9g3f4qwi7es6hd23rygwgyh8iw8itwyhecr8iwhety",
-  JWT_SECRET_REFRESH:
-    process.env.JWT_SECRET_REFRESH ||
-    "23o4r89ty24rf897th23dr97823drt867g24rd7968t2d4r6789tg2fr3d4",
-  OKTA_ORG_URL: process.env.OKTA_ORG_URL,
-  OKTA_CLIENT_ID: process.env.OKTA_CLIENT_ID,
-  OKTA_CLIENT_SECRET: process.env.OKTA_CLIENT_SECRET,
-  OKTA_TOKEN: process.env.OKTA_TOKEN,
-};
+export const BACKEND_PORT: string | undefined = process.env.BACKEND_PORT;
 
-export default Secrets;
+export const DB_URI: string | undefined = process.env.DB_URI;
+export const DB_HOST: string | undefined = process.env.DB_HOST;
+export const DB_NAME: string | undefined = process.env.DB_NAME;
+export const DB_USER: string | undefined = process.env.DB_USER;
+export const DB_PASS: string | undefined = process.env.DB_PASS;
+
+export const FRONTEND_URL: string | undefined = process.env.FRONTEND_URL;
+
+// export const OKTA_ORG_URL: string | undefined = process.env.OKTA_ORG_URL;
+// export const OKTA_CLIENT_ID: string | undefined = process.env.OKTA_CLIENT_ID;
+// export const OKTA_CLIENT_SECRET: string | undefined =
+//   process.env.OKTA_CLIENT_SECRET;
+// export const OKTA_TOKEN: string | undefined = process.env.OKTA_TOKEN;
+
+export const SLACK_TOKEN: string | undefined = process.env.SLACK_TOKEN;
+// export const // "xoxb-3489381336180-3484233018965-OurszVudQq29CNMtCTQV9fLP";
+export const SLACK_CHANNEL: string | undefined = process.env.SLACK_CHANNEL;
+
+export const REDIS_PORT: number | undefined = Number(process.env.REDIS_PORT);
+export const REDIS_HOST: string | undefined = process.env.REDIS_HOST;
+export const REDIS_USER: string | undefined = process.env.REDIS_USER;
+export const REDIS_PASSWORD: string | undefined = process.env.REDIS_PASSWORD;
+export const REDIS_DB: number | undefined = Number(process.env.REDIS_DB);
+
+export const SESSION_SECRET: string | undefined = process.env.SESSION_SECRET;
+
+export const SECURE_FLAG: boolean | "auto" | undefined = Boolean(
+  process.env.SECURE_FLAG
+);
+export const SAME_SITE: boolean | "lax" | "strict" | "none" | undefined = ((
+  val: string | undefined
+) => {
+  if (val === "lax" || val === "strict" || val === "none") {
+    return val;
+  } else if (val === "true") {
+    return true;
+  } else if (val === "false") {
+    return false;
+  } else {
+    return undefined;
+  }
+})(process.env.SAME_SITE);

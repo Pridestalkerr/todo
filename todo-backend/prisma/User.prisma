@@ -1,0 +1,22 @@
+model User {
+  id              String           @id @default(uuid())
+  userCredentials UserCredentials?
+  userData        UserData?
+}
+
+model UserCredentials {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String @unique
+
+}
+
+model UserData {
+  id        String @id @default(uuid())
+  firstName String
+  lastName  String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String @unique
+}

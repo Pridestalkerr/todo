@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgis/postgis:13-master
+    restart: always
+    environment:
+      - POSTGRES_USER=todo-dev
+      - POSTGRES_PASSWORD=todo-dev
+      - POSTGRES_DB=todo-dev
+    volumes:
+      - ./postgres/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  backend:
+    build:
+      context: ./todo-backend/
+      dockerfile: ./todo-backend/Dockerfile.dev
+    volumes:
+      - ./todo-backend:/app
+      # - /app/node_modules/
+    ports:
+      - 3000:3000
+    environment:
+      - FRONTEND_URL=http://localhost:9000
+      - DB_HOST=postgres
+      - DB_NAME=todo-dev
+      - DB_USER=todo-dev
+      - DB_PASS=todo-dev
+      - DB_URI=postgresql://todo-dev:todo-dev@postgres/todo-dev?schema=public
+    # depends_on:
+    #   - postgres
+
+  frontend:
+    build: ./todo-frontend/
+    ports:
+      - 9000:9000
+    environment:
+      - BACKEND_URL=http://localhost:9000
+      - REACT_APP_BACKEND_URL=http://localhost:9000
+    # depends_on:
+    #   - backend

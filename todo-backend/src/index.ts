@@ -1,59 +1,38 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import session from "express-session";
+import { createServer } from "http";
 import cors from "cors";
 import dotenv from "dotenv";
-import { createServer } from "http";
-import session from "express-session";
-import { ExpressOIDC } from "@okta/oidc-middleware";
 
-import userRouter from "routers/User";
+import { RedisStore, redisClient, SessionManager } from "redisStore";
 
-import Secrets from "secrets";
+// import userRouter from "routers/User";
+
+import * as Secrets from "secrets";
+import { BACKEND_PORT } from "secrets";
 
 const prisma = new PrismaClient();
 
 const main = async () => {
   dotenv.config();
-  const PORT = Secrets.PORT;
-  const DB_URI = Secrets.DB_URI;
-  const DB_HOST = Secrets.DB_HOST;
-  const DB_NAME = Secrets.DB_NAME;
-  const DB_USER = Secrets.DB_USER;
-  const DB_PASS = Secrets.DB_PASS;
-  const FRONTEND_URL = Secrets.FRONTEND_URL;
-
-  console.log(DB_HOST, DB_NAME, DB_USER, DB_PASS);
-
-  const oidc = new ExpressOIDC({
-    client_id: Secrets.OKTA_CLIENT_ID,
-    client_secret: Secrets.OKTA_CLIENT_SECRET,
-    issuer: `${Secrets.OKTA_ORG_URL}/oauth2/default`,
-    redirect_uri: `${Secrets.FRONTEND_URL}/authorization-code/callback`, // change this to backend maybe.. should be easier
-    appBaseUrl: `${Secrets.FRONTEND_URL}`,
-    scope: "openid profile",
-  });
+  console.log(Secrets);
 
   const app = express();
+  app.set("trust proxy", 1); // trust first proxy (nginx)
   app.use(express.json());
-  app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+  app.use(cors({ origin: Secrets.FRONTEND_URL, credentials: true }));
 
-  app.use(
-    session({
-      resave: true,
-      saveUninitialized: false,
-      secret: Secrets.JWT_SECRET_ACCESS,
-    })
-  );
+  app.use(SessionManager);
 
-  app.use(oidc.router);
-  app.locals.oidc = oidc;
+  // app.locals.oidc = oidc;
 
-  app.use(userRouter);
+  // app.use(userRouter);
 
   const server = createServer();
 
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  server.listen(BACKEND_PORT, () => {
+    console.log(`Server running on port ${BACKEND_PORT}`);
   });
 };
 

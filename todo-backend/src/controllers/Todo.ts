@@ -1,18 +1,41 @@
-import { prisma, Todo } from "@prisma/client";
+import { Activity, PrismaClient, Todo, Prisma, User } from "@prisma/client";
+
+import argon2 from "argon2";
+const prisma = new PrismaClient();
+
+// create({
+//   title: "DASdas",
+//   description: "Dasdas",
+//   activity: {
+//     connect: {
+//       id:
+//     },
+//     create: {
+
+//     }
+//   }
+// })
+
+
+/*
+
+joi schema => api/v1/routes/index.js
+
+*/
 
 export default {
-  find: async (id: Number) => {
+  find: async (id: number) => {
     await prisma.todo.findUnique({
-      id,
+      where: {
+        id,
+      },
     });
   },
 
-  create: async (email: string, password: string) => {
+  create: async (user: User, todo: Todo, activity: Activity) => {
+    data: Prisma.TodoCreateInput = 
     const todo: Todo = await prisma.todo.create({
-      data: {
-        email,
-        password: await argon2.hash(password),
-      },
+      data,
     });
   },
 

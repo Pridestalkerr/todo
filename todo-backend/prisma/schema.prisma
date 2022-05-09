@@ -11,24 +11,44 @@ datasource db {
 }
 
 model User {
-  id              Int         @id @default(autoincrement())
-  email         String      @unique @db.VarChar(100)
-  password      String
+  id              String           @id @default(uuid())
+  userCredentials UserCredentials?
+  userData        UserData?
+  googleId        String?
+  facebookId      String?
+  twitterId       String?
+  githubId        String?
+}
+
+model UserCredentials {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String @unique
+}
+
+model UserData {
+  id        String @id @default(uuid())
+  firstName String
+  lastName  String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String @unique
 }
 
 model Activity {
-  id            Int         @id @default(autoincrement())
-  title         String
-  description      String
+  id          String  @id @default(uuid())
+  title       String
+  description String
   status      Boolean
-  todos     Todo[]
+  todos       Todo[]
 }
 
 model Todo {
-  id            Int         @id @default(autoincrement())
-  title     String
-  description      String
+  id          String   @id @default(uuid())
+  title       String
+  description String
   status      Boolean
-  activityId    Int
-  activity      Activity    @relation(fields: [activityId], references: [id])
+  activityId  String
+  activity    Activity @relation(fields: [activityId], references: [id])
 }
